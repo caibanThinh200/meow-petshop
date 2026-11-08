@@ -78,7 +78,7 @@ export function SizeGuideProvider({ children }: { children: React.ReactNode }) {
                   </thead>
                   <tbody>
                     {rows.map((r) => (
-                      <tr key={r.size} className="border-t border-dashed border-ink/30">
+                      <tr key={r.size} className="border-t border-solid border-ink/30">
                         <td className="p-2 font-bold text-candy">{r.size}</td>
                         <td className="p-2">{r.weight}</td>
                         <td className="p-2">{r.chest}</td>

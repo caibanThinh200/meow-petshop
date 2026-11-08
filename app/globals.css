@@ -31,7 +31,7 @@ body {
 }
 
 .sticker {
-  border: 2px dashed var(--ink);
+  border: 2px solid var(--ink);
   box-shadow: var(--shadow-pop);
 }
 

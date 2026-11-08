@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { Phone } from "lucide-react";
 import { useSizeGuide } from "./SizeGuide";
 
@@ -11,7 +12,7 @@ export default function Header() {
   const link = "rounded-full px-3 py-1.5 font-semibold transition hover:bg-bubble/60";
   return (
     <header className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-3 px-5 pt-6">
-      <a href="/" aria-label="Meow Petshop">
+      <Link href="/" aria-label="Meow Petshop">
         <Image
           src="/logo.png"
           alt="Meow Petshop – For your precious friends"
@@ -20,7 +21,7 @@ export default function Header() {
           priority
           className="h-16 w-16 rounded-full object-cover sm:h-20 sm:w-20"
         />
-      </a>
+      </Link>
       <nav aria-label="Menu chính" className="order-3 flex w-full justify-center gap-1 sm:order-none sm:w-auto">
         <a href="#deals" className={link}>Sản phẩm</a>
         <a href="#deals" className={link}>Danh mục</a>

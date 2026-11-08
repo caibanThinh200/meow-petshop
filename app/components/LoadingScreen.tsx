@@ -6,15 +6,11 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 export default function LoadingScreen() {
-  const [show, setShow] = useState(true);
-
   const [tick, setTick] = useState(0);
+  const show = tick < 9;
 
   useEffect(() => {
-    if (tick >= 9) {
-      setShow(false);
-      return;
-    }
+    if (tick >= 9) return;
     const t = setTimeout(() => setTick((n) => n + 1), 300);
     return () => clearTimeout(t);
   }, [tick]);

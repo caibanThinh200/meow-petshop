@@ -20,7 +20,7 @@ function SizeGuideLink() {
     <button
       type="button"
       onClick={open}
-      className="inline-flex items-center gap-1 font-semibold text-candy underline decoration-dashed underline-offset-4 hover:text-honey"
+      className="inline-flex items-center gap-1 font-semibold text-candy underline decoration-solid underline-offset-4 hover:text-honey"
     >
       <Ruler size={16} aria-hidden /> Hướng dẫn chọn size
     </button>
@@ -50,7 +50,7 @@ function DealCard({ d }: { d: (typeof deals)[number] }) {
             role="radio"
             aria-checked={size === s}
             onClick={() => setSize(s)}
-            className={`h-9 w-9 rounded-full border-2 border-dashed border-ink text-sm font-bold transition ${
+            className={`h-9 w-9 rounded-full border-2 border-solid border-ink text-sm font-bold transition ${
               size === s ? "bg-honey text-white" : "bg-cream hover:bg-bubble/50"
             }`}
           >
