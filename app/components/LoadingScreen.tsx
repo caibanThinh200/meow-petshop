@@ -2,15 +2,22 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { Sparkles } from "lucide-react";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 
 export default function LoadingScreen() {
   const [show, setShow] = useState(true);
 
+  const [tick, setTick] = useState(0);
+
   useEffect(() => {
-    const t = setTimeout(() => setShow(false), 1200);
+    if (tick >= 9) {
+      setShow(false);
+      return;
+    }
+    const t = setTimeout(() => setTick((n) => n + 1), 300);
     return () => clearTimeout(t);
-  }, []);
+  }, [tick]);
 
   return (
     <AnimatePresence>
@@ -24,9 +31,15 @@ export default function LoadingScreen() {
           transition={{ duration: 0.4 }}
         >
           <div className="relative">
-            <div className="text-8xl" aria-hidden>
-              🐱
-            </div>
+            <Image
+              src="/images/loading-pets.png"
+              alt=""
+              width={240}
+              height={180}
+              priority
+              aria-hidden
+              className="h-auto w-60 sm:w-60"
+            />
 
             {[
               "-top-4 -left-8",
@@ -43,13 +56,19 @@ export default function LoadingScreen() {
               </motion.span>
             ))}
           </div>
-          <motion.p
-            className="text-2xl font-bold tracking-wide text-honey"
-            animate={{ scale: [1, 1.08, 1] }}
-            transition={{ duration: 0.8, repeat: Infinity }}
-          >
-            MEOW ĐANG LÊN ĐỒ...
-          </motion.p>
+          <p className="translate-x-6 text-2xl font-bold tracking-wide text-honey">
+            MEOW ĐANG LÊN ĐỒ
+            {"  "}
+            {[0, 1, 2].map((d) => (
+              <span
+                key={d}
+                className="ml-1 text-5xl"
+                style={{ opacity: tick % 4 > d ? 1 : 0 }}
+              >
+                .
+              </span>
+            ))}
+          </p>
         </motion.div>
       )}
     </AnimatePresence>

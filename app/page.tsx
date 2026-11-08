@@ -1,30 +1,33 @@
-import Image from "next/image";
+import { Phone } from "lucide-react";
+import Header from "./components/Header";
 import Hero from "./components/Hero";
 import LoadingScreen from "./components/LoadingScreen";
-import { CategoryRail, FlashDeals, Reels } from "./components/Sections";
+import { FlashDeals } from "./components/Sections";
+import { SizeGuideProvider } from "./components/SizeGuide";
 
 export default function Home() {
   return (
-    <>
+    <SizeGuideProvider>
       <LoadingScreen />
-      <header className="mx-auto flex w-full max-w-6xl items-center justify-between px-5 pt-6">
-        <a href="/" aria-label="Meow Petshop">
-          <Image
-            src="/logo.png"
-            alt="Meow Petshop – For your precious friends"
-            width={96}
-            height={96}
-            priority
-            className="h-16 w-16 rounded-full object-cover sm:h-20 sm:w-20"
-          />
-        </a>
-      </header>
+      <Header />
       <main>
         <Hero />
-        <CategoryRail />
-        <Reels />
         <FlashDeals />
       </main>
-    </>
+      <footer id="contact" className="mx-auto w-full max-w-6xl px-5 pb-16">
+        <div className="sticker flex flex-col items-center justify-between gap-4 rounded-3xl bg-bubble/40 p-6 text-center sm:flex-row sm:text-left">
+          <div>
+            <h2 className="text-2xl font-bold">Liên hệ Meow Petshop</h2>
+            <p className="text-ink/70">Gọi hoặc nhắn Zalo để được tư vấn size cho bé nhé!</p>
+          </div>
+          <a
+            href="tel:0906765705"
+            className="sticker inline-flex items-center gap-2 rounded-full bg-mint px-6 py-3 text-lg font-bold text-white"
+          >
+            <Phone size={20} aria-hidden /> 0906765705
+          </a>
+        </div>
+      </footer>
+    </SizeGuideProvider>
   );
 }

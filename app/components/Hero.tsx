@@ -41,7 +41,7 @@ export default function Hero() {
             Săn Deal Đồ Tết &amp; Cosplay
           </motion.a>
           <motion.a
-            href="#reels"
+            href="#deals"
             whileHover={{ y: -4 }}
             className="sticker inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 font-bold"
           >
@@ -56,7 +56,7 @@ export default function Hero() {
             key={c.label}
             initial={{ opacity: 0, scale: 0.7, rotate: 0 }}
             animate={{ opacity: 1, scale: 1, rotate: c.rot }}
-            whileHover={{ scale: 1.1, rotate: 0, zIndex: 20 }}
+            whileHover={{ scale: 1.1, rotate: 0 }}
             transition={{ delay: 0.3 + i * 0.15, type: "spring" }}
             className={`sticker absolute h-56 w-40 overflow-hidden rounded-3xl ${c.bg} bg-white`}
             style={{ left: `${i * 28}%`, top: `${i * 12}%` }}
