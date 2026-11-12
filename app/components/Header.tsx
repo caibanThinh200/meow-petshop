@@ -23,8 +23,8 @@ export default function Header() {
         />
       </Link>
       <nav aria-label="Menu chính" className="order-3 flex w-full justify-center gap-1 sm:order-none sm:w-auto">
-        <a href="#deals" className={link}>Sản phẩm</a>
-        <a href="#deals" className={link}>Danh mục</a>
+        <Link href="/#deals" className={link}>Sản phẩm</Link>
+        <Link href="/#deals" className={link}>Danh mục</Link>
         <button type="button" onClick={open} className={link}>Kích cỡ</button>
         <a href="#contact" className={link}>Liên hệ</a>
       </nav>

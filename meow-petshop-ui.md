@@ -37,4 +37,15 @@ Create an animated, vibrant, and playful pet fashion e-commerce storefront for "
 3. **Flash Fashion Deals:**
    - Cards with discount stickers, size picker (S, M, L, XL), and instant "Thêm vào giỏ".
 
+### 5. PRODUCT DETAIL PAGE (/products/[slug])
+- **Entry:** Clicking a Flash Fashion Deals card (image or name) navigates to `/products/[slug]`. Size picker and "Thêm vào giỏ" on the card keep working without navigating.
+- **Layout (same style as homepage: cream bg, `.sticker` borders, pop shadows, rounded-3xl, Baloo font):** Header on top, breadcrumb "Trang chủ / Flash Deals / {name}".
+  * Left: large main image + row of clickable thumbnails (active thumb highlighted with honey border).
+  * Right: name, rating "★ 4.9 (128 đánh giá)", price in candy + old price strikethrough + bubble discount sticker, size picker (S, M, L, XL), quantity stepper (− 1 +), Mint "Thêm vào giỏ" CTA, perk stickers ("100% Cotton Mát Lưng", "Đổi size 7 ngày", "Giao nhanh 2h").
+  * Mobile: stacks vertically (gallery above info).
+- **Tabs underneath:** "Chi tiết sản phẩm" (mock content: description, highlights, material, care instructions) and "Bảng size" (S–XL table: cân nặng, vòng ngực, vòng cổ, dài lưng — same data as the Size Guide modal).
+- **Data:** shared `app/data/products.ts` (slug, name, price, old, off, src, images[], rating, reviews, description, highlights[], material, care[]).
+- **Animation:** fade-in on mount (not gated on loading screen).
+- Footer shared with homepage.
+
 Ensure clean TypeScript code, responsive layouts for mobile and desktop, and production-ready components.

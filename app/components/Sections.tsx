@@ -2,17 +2,12 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 import { Ruler, ShoppingBag } from "lucide-react";
 import { useState } from "react";
 import { usePageReady } from "./LoadingScreen";
 import { useSizeGuide } from "./SizeGuide";
-
-const SIZES = ["S", "M", "L", "XL"] as const;
-const deals = [
-  { src: "/images/hero-cat.jpg", name: "Áo lưới co giãn", price: "159.000đ", old: "249.000đ", off: "-36%" },
-  { src: "/images/hero-bichon.jpg", name: "Áo lông tai thỏ", price: "129.000đ", old: "199.000đ", off: "-35%" },
-  { src: "/images/hero-puppy.jpg", name: "Áo nỉ thu đông", price: "89.000đ", old: "149.000đ", off: "-40%" },
-];
+import { products, SIZES, type Product } from "@/app/data/products";
 
 function SizeGuideLink() {
   const { open } = useSizeGuide();
@@ -27,7 +22,7 @@ function SizeGuideLink() {
   );
 }
 
-function DealCard({ d, index }: { d: (typeof deals)[number]; index: number }) {
+function DealCard({ d, index }: { d: Product; index: number }) {
   const isReady = usePageReady();
   const [size, setSize] = useState<(typeof SIZES)[number]>("M");
   const [added, setAdded] = useState(false);
@@ -41,13 +36,21 @@ function DealCard({ d, index }: { d: (typeof deals)[number]; index: number }) {
       whileHover={{ y: -6, transition: { duration: 0.2, delay: 0 } }}
       className="sticker relative rounded-3xl bg-white p-5"
     >
-      <span className="sticker absolute -right-3 -top-3 rotate-12 rounded-full bg-bubble px-3 py-1 text-sm font-bold">
+      <span className="sticker pointer-events-none absolute -right-3 -top-3 z-10 rotate-12 rounded-full bg-bubble px-3 py-1 text-sm font-bold">
         {d.off}
       </span>
-      <div className="relative h-48 overflow-hidden rounded-2xl bg-honey/20">
-        <Image src={d.src} alt={d.name} fill sizes="(min-width: 768px) 33vw, 100vw" className="object-cover" />
-      </div>
-      <h3 className="mt-4 text-lg font-bold">{d.name}</h3>
+      <Link href={`/products/${d.slug}`} aria-label={d.name} className="group block">
+        <div className="relative h-48 overflow-hidden rounded-2xl bg-honey/20">
+          <Image
+            src={d.src}
+            alt={d.name}
+            fill
+            sizes="(min-width: 768px) 33vw, 100vw"
+            className="object-cover transition-transform duration-300 group-hover:scale-105"
+          />
+        </div>
+        <h3 className="mt-4 text-lg font-bold transition-colors group-hover:text-candy">{d.name}</h3>
+      </Link>
       <p className="mt-1">
         <span className="text-xl font-bold text-candy">{d.price}</span>{" "}
         <span className="text-sm text-ink/50 line-through">{d.old}</span>
@@ -97,7 +100,7 @@ export function FlashDeals() {
         <SizeGuideLink />
       </motion.div>
       <div className="grid gap-6 md:grid-cols-3">
-        {deals.map((d, i) => (
+        {products.map((d, i) => (
           <DealCard key={d.name} d={d} index={i} />
         ))}
       </div>

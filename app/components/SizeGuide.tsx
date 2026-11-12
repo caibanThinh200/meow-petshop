@@ -3,17 +3,11 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { Ruler, X } from "lucide-react";
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
+import { sizeRows } from "@/app/data/products";
 
 const SizeGuideContext = createContext<{ open: () => void }>({ open: () => {} });
 
 export const useSizeGuide = () => useContext(SizeGuideContext);
-
-const rows = [
-  { size: "S", weight: "1 – 2.5 kg", chest: "30 – 36", neck: "20 – 24", back: "20 – 25" },
-  { size: "M", weight: "2.5 – 4 kg", chest: "36 – 42", neck: "24 – 28", back: "25 – 30" },
-  { size: "L", weight: "4 – 6 kg", chest: "42 – 50", neck: "28 – 33", back: "30 – 36" },
-  { size: "XL", weight: "6 – 8 kg", chest: "50 – 58", neck: "33 – 38", back: "36 – 42" },
-];
 
 export function SizeGuideProvider({ children }: { children: React.ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -77,7 +71,7 @@ export function SizeGuideProvider({ children }: { children: React.ReactNode }) {
                     </tr>
                   </thead>
                   <tbody>
-                    {rows.map((r) => (
+                    {sizeRows.map((r) => (
                       <tr key={r.size} className="border-t border-solid border-ink/30">
                         <td className="p-2 font-bold text-candy">{r.size}</td>
                         <td className="p-2">{r.weight}</td>
