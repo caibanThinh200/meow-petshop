@@ -3,12 +3,12 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { Play } from "lucide-react";
-import Reveal from "./Reveal";
+import { usePageReady } from "./LoadingScreen";
 
 const cards = [
-  { src: "/images/hero-cat.jpg", label: "Hoodie Khủng Long", bg: "bg-mint/30", rot: -8 },
-  { src: "/images/hero-puppy.jpg", label: "Mũ Sư Tử", bg: "bg-bubble/60", rot: 4 },
-  { src: "/images/hero-bichon.jpg", label: "Knitwear Trendy", bg: "bg-candy/30", rot: -3 },
+  { src: "/images/hero-cat.jpg", label: "Áo lưới co giãn", bg: "bg-mint/30", rot: -8 },
+  { src: "/images/hero-puppy.jpg", label: "Áo nỉ thu đông", bg: "bg-bubble/60", rot: 4 },
+  { src: "/images/hero-bichon.jpg", label: "Áo lông tai thỏ", bg: "bg-candy/30", rot: -3 },
 ];
 
 const stickers = [
@@ -18,20 +18,33 @@ const stickers = [
 ];
 
 export default function Hero() {
+  const isReady = usePageReady();
+
   return (
-    <Reveal className="mx-auto grid w-full max-w-6xl items-center gap-12 px-5 py-16 md:grid-cols-2 md:py-24">
+    <section className="mx-auto grid w-full max-w-6xl items-center gap-12 px-5 py-16 md:grid-cols-2 md:py-24">
       <div>
-        <span className="sticker inline-block rounded-full bg-bubble px-4 py-2 text-sm font-semibold">
-          🔥 BST Thu Đông Hoàng Thượng 2026 - TikTok Viral
-        </span>
-        <h1 className="mt-6 text-4xl font-bold leading-tight md:text-6xl">
-          Biến <span className="text-honey">&apos;Hoàng Thượng&apos;</span> Thành{" "}
-          <span className="text-candy">Fashionista Nhí!</span>
-        </h1>
-        <p className="mt-5 max-w-lg text-lg text-ink/80">
-          Bộ sưu tập hoodie, váy công chúa, nơ cổ và cosplay cưng xỉu độc quyền tại Meow Petshop.
-        </p>
-        <div className="mt-8 flex flex-wrap gap-4">
+        {/* <span className="sticker inline-block rounded-full bg-bubble px-4 py-2 text-sm font-semibold">
+          Mặc xinh - Chụp ảnh - Đi chơi
+        </span> */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={isReady ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
+          transition={{ duration: 0.5, ease: "easeOut", delay: 0 }}
+        >
+          <h1 className="mt-6 text-4xl font-bold leading-tight md:text-6xl">
+            Biến <span className="text-honey">&apos;Hoàng Thượng&apos;</span> Thành{" "}
+            <span className="text-candy">Fashionista Nhí!</span>
+          </h1>
+          <p className="mt-5 max-w-lg text-lg text-ink/80">
+            Bộ sưu tập hoodie, váy công chúa, nơ cổ và cosplay cưng xỉu độc quyền tại Meow Petshop.
+          </p>
+        </motion.div>
+        <motion.div
+          className="mt-8 flex flex-wrap gap-4"
+          initial={{ opacity: 0, y: -20 }}
+          animate={isReady ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
+          transition={{ duration: 0.5, ease: "easeOut", delay: 0.15 }}
+        >
           <motion.a
             href="#deals"
             whileHover={{ y: -4, scale: 1.04 }}
@@ -47,17 +60,22 @@ export default function Hero() {
           >
             <Play size={18} aria-hidden /> Xem Review Mặc Thử Trên TikTok
           </motion.a>
-        </div>
+        </motion.div>
       </div>
 
-      <div className="relative mx-auto flex h-[420px] w-full max-w-md items-center justify-center">
+      <motion.div
+        className="relative mx-auto flex h-[420px] w-full max-w-md items-center justify-center"
+        initial={{ opacity: 0, y: -20 }}
+        animate={isReady ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
+        transition={{ duration: 0.5, ease: "easeOut", delay: 0.5 }}
+      >
         {cards.map((c, i) => (
           <motion.div
             key={c.label}
-            initial={{ opacity: 0, scale: 0.7, rotate: 0 }}
-            animate={{ opacity: 1, scale: 1, rotate: c.rot }}
-            whileHover={{ scale: 1.1, rotate: 0 }}
-            transition={{ delay: 0.3 + i * 0.15, type: "spring" }}
+            initial={{ opacity: 0, y: -20, rotate: 0 }}
+            animate={isReady ? { opacity: 1, y: 0, rotate: c.rot } : { opacity: 0, y: -20, rotate: 0 }}
+            whileHover={{ scale: 1.1, rotate: 0, transition: { duration: 0.2, delay: 0 } }}
+            transition={{ duration: 0.5, ease: "easeOut", delay: 0.5 + i * 0.15 }}
             className={`sticker absolute h-56 w-40 overflow-hidden rounded-3xl ${c.bg} bg-white`}
             style={{ left: `${i * 28}%`, top: `${i * 12}%` }}
           >
@@ -76,7 +94,7 @@ export default function Hero() {
             {s.text}
           </span>
         ))}
-      </div>
-    </Reveal>
+      </motion.div>
+    </section>
   );
 }

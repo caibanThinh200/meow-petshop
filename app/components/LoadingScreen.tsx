@@ -3,17 +3,54 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { Sparkles } from "lucide-react";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
+
+let pageReady = false;
+const listeners = new Set<() => void>();
+
+function notify() {
+  listeners.forEach((listener) => listener());
+}
+
+export function setPageReady(ready: boolean) {
+  if (pageReady !== ready) {
+    pageReady = ready;
+    notify();
+  }
+}
+
+export function usePageReady(): boolean {
+  return useSyncExternalStore(
+    (listener) => {
+      listeners.add(listener);
+      return () => {
+        listeners.delete(listener);
+      };
+    },
+    () => pageReady,
+    () => false
+  );
+}
 
 export default function LoadingScreen() {
   const [tick, setTick] = useState(0);
   const show = tick < 9;
 
   useEffect(() => {
-    if (tick >= 9) return;
+    if (tick >= 9) {
+      setPageReady(true);
+      return;
+    }
+    setPageReady(false);
     const t = setTimeout(() => setTick((n) => n + 1), 300);
     return () => clearTimeout(t);
   }, [tick]);
+
+  useEffect(() => {
+    return () => {
+      setPageReady(true);
+    };
+  }, []);
 
   return (
     <AnimatePresence>

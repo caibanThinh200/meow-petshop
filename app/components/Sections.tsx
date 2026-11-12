@@ -4,14 +4,14 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { Ruler, ShoppingBag } from "lucide-react";
 import { useState } from "react";
-import Reveal from "./Reveal";
+import { usePageReady } from "./LoadingScreen";
 import { useSizeGuide } from "./SizeGuide";
 
 const SIZES = ["S", "M", "L", "XL"] as const;
 const deals = [
-  { src: "/images/hero-cat.jpg", name: "Hoodie Khủng Long", price: "159.000đ", old: "249.000đ", off: "-36%" },
-  { src: "/images/hero-bichon.jpg", name: "Váy Công Chúa Nơ", price: "129.000đ", old: "199.000đ", off: "-35%" },
-  { src: "/images/hero-puppy.jpg", name: "Mũ Sư Tử Cosplay", price: "89.000đ", old: "149.000đ", off: "-40%" },
+  { src: "/images/hero-cat.jpg", name: "Áo lưới co giãn", price: "159.000đ", old: "249.000đ", off: "-36%" },
+  { src: "/images/hero-bichon.jpg", name: "Áo lông tai thỏ", price: "129.000đ", old: "199.000đ", off: "-35%" },
+  { src: "/images/hero-puppy.jpg", name: "Áo nỉ thu đông", price: "89.000đ", old: "149.000đ", off: "-40%" },
 ];
 
 function SizeGuideLink() {
@@ -27,11 +27,20 @@ function SizeGuideLink() {
   );
 }
 
-function DealCard({ d }: { d: (typeof deals)[number] }) {
+function DealCard({ d, index }: { d: (typeof deals)[number]; index: number }) {
+  const isReady = usePageReady();
   const [size, setSize] = useState<(typeof SIZES)[number]>("M");
   const [added, setAdded] = useState(false);
   return (
-    <motion.article whileHover={{ y: -6 }} className="sticker relative rounded-3xl bg-white p-5">
+    <motion.article
+      initial={{ opacity: 0, y: -20 }}
+      whileInView={isReady ? { opacity: 1, y: 0 } : undefined}
+      animate={!isReady ? { opacity: 0, y: -20 } : undefined}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.5, ease: "easeOut", delay: index * 0.15 }}
+      whileHover={{ y: -6, transition: { duration: 0.2, delay: 0 } }}
+      className="sticker relative rounded-3xl bg-white p-5"
+    >
       <span className="sticker absolute -right-3 -top-3 rotate-12 rounded-full bg-bubble px-3 py-1 text-sm font-bold">
         {d.off}
       </span>
@@ -72,17 +81,26 @@ function DealCard({ d }: { d: (typeof deals)[number] }) {
 }
 
 export function FlashDeals() {
+  const isReady = usePageReady();
+
   return (
-    <Reveal id="deals" className="mx-auto w-full max-w-6xl px-5 py-12 pb-24">
-      <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
+    <section id="deals" className="mx-auto w-full max-w-6xl px-5 py-12 pb-24">
+      <motion.div
+        className="mb-6 flex flex-wrap items-end justify-between gap-3"
+        initial={{ opacity: 0, y: -20 }}
+        whileInView={isReady ? { opacity: 1, y: 0 } : undefined}
+        animate={!isReady ? { opacity: 0, y: -20 } : undefined}
+        viewport={{ once: true, margin: "-60px" }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+      >
         <h2 className="text-3xl font-bold">⚡ Flash Fashion Deals</h2>
         <SizeGuideLink />
-      </div>
+      </motion.div>
       <div className="grid gap-6 md:grid-cols-3">
-        {deals.map((d) => (
-          <DealCard key={d.name} d={d} />
+        {deals.map((d, i) => (
+          <DealCard key={d.name} d={d} index={i} />
         ))}
       </div>
-    </Reveal>
+    </section>
   );
 }
