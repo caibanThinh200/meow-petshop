@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import { Play } from "lucide-react";
 import { usePageReady } from "./LoadingScreen";
@@ -19,6 +19,7 @@ const stickers = [
 
 export default function Hero() {
   const isReady = usePageReady();
+  const reduceMotion = useReducedMotion();
 
   return (
     <section className="mx-auto grid w-full max-w-6xl items-center gap-12 px-5 py-16 md:grid-cols-2 md:py-24">
@@ -33,9 +34,32 @@ export default function Hero() {
         >
           <h1 className="mt-6 text-4xl font-bold leading-tight md:text-6xl">
             Biến <span className="text-honey">&apos;Hoàng Thượng&apos;</span> Thành{" "}
-            <span className="text-candy">Fashionista Nhí!</span>
+            <span className="relative inline-block text-candy">
+              Fashionista Nhí!
+              <svg
+                aria-hidden
+                viewBox="0 0 500 40"
+                preserveAspectRatio="none"
+                className="pointer-events-none absolute -bottom-[0.45em] left-0 h-[0.5em] w-full overflow-visible"
+                fill="none"
+              >
+                <motion.path
+                  d="M5 22 C20 8, 45 6, 50 14 C55 22, 30 38, 28 36 C26 33, 70 10, 100 12 C120 13, 110 30, 100 28 C90 26, 105 8, 130 14 C170 24, 230 30, 290 22 C330 16, 360 8, 380 14 C395 19, 385 32, 372 28 C360 24, 380 10, 410 16 C440 22, 470 24, 495 12"
+                  stroke="currentColor"
+                  strokeWidth={3.5}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  initial={{ pathLength: 0, opacity: 0 }}
+                  animate={isReady ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
+                  transition={{
+                    pathLength: { duration: reduceMotion ? 0 : 1.4, ease: [0.45, 0, 0.25, 1], delay: reduceMotion ? 0 : 0.6 },
+                    opacity: { duration: 0.1, delay: reduceMotion ? 0 : 0.6 },
+                  }}
+                />
+              </svg>
+            </span>
           </h1>
-          <p className="mt-5 max-w-lg text-lg text-ink/80">
+          <p className="mt-10 md:mt-12 max-w-lg text-lg text-ink/80">
             Bộ sưu tập hoodie, váy công chúa, nơ cổ và cosplay cưng xỉu độc quyền tại Meow Petshop.
           </p>
         </motion.div>
@@ -54,7 +78,9 @@ export default function Hero() {
             Săn Deal Đồ Tết &amp; Cosplay
           </motion.a>
           <motion.a
-            href="#deals"
+            href="https://www.tiktok.com/@meowpetshop193"
+            target="_blank"
+            rel="noopener noreferrer"
             whileHover={{ y: -4 }}
             className="sticker inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 font-bold"
           >

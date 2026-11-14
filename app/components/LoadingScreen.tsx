@@ -3,7 +3,8 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { Sparkles } from "lucide-react";
 import Image from "next/image";
-import { useEffect, useState, useSyncExternalStore } from "react";
+import { useEffect, useLayoutEffect, useState, useSyncExternalStore } from "react";
+import { usePathname } from "next/navigation";
 
 let pageReady = false;
 const listeners = new Set<() => void>();
@@ -32,11 +33,36 @@ export function usePageReady(): boolean {
   );
 }
 
+let loaderTrigger: (() => void) | null = null;
+
+/** Show the loading overlay immediately (e.g. before a route change). */
+export function startLoader() {
+  loaderTrigger?.();
+}
+
 export default function LoadingScreen() {
   const [tick, setTick] = useState(0);
+  const pathname = usePathname();
+  const [prevPathname, setPrevPathname] = useState(pathname);
+  const [hasNavigated, setHasNavigated] = useState(false);
+  if (pathname !== prevPathname) {
+    setPrevPathname(pathname);
+    setHasNavigated(true);
+    if (tick >= 9) setTick(0);
+  }
   const show = tick < 9;
 
   useEffect(() => {
+    loaderTrigger = () => {
+      setHasNavigated(true);
+      setTick(0);
+    };
+    return () => {
+      loaderTrigger = null;
+    };
+  }, []);
+
+  useLayoutEffect(() => {
     if (tick >= 9) {
       setPageReady(true);
       return;
@@ -59,9 +85,10 @@ export default function LoadingScreen() {
           role="status"
           aria-live="polite"
           className="fixed inset-0 z-50 flex flex-col items-center justify-center gap-6 bg-cream"
-          initial={{ opacity: 1 }}
+          initial={{ opacity: hasNavigated ? 0 : 1 }}
+          animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.4 }}
+          transition={{ duration: hasNavigated ? 0.3 : 0.4, ease: "easeOut" }}
         >
           <div className="relative">
             <Image

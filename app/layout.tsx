@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Baloo_2 } from "next/font/google";
+import { Suspense } from "react";
+import LoadingScreen from "./components/LoadingScreen";
 import "./globals.css";
 
 const fredoka = Baloo_2({
@@ -16,7 +18,12 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="vi" className={`${fredoka.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <Suspense fallback={null}>
+          <LoadingScreen />
+        </Suspense>
+        {children}
+      </body>
     </html>
   );
 }

@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import Link from "next/link";
+import TransitionLink from "./TransitionLink";
 import { Ruler, ShoppingBag } from "lucide-react";
 import { useState } from "react";
 import { usePageReady } from "./LoadingScreen";
@@ -39,7 +39,7 @@ function DealCard({ d, index }: { d: Product; index: number }) {
       <span className="sticker pointer-events-none absolute -right-3 -top-3 z-10 rotate-12 rounded-full bg-bubble px-3 py-1 text-sm font-bold">
         {d.off}
       </span>
-      <Link href={`/products/${d.slug}`} aria-label={d.name} className="group block">
+      <TransitionLink href={`/products/${d.slug}`} aria-label={d.name} className="group block">
         <div className="relative h-48 overflow-hidden rounded-2xl bg-honey/20">
           <Image
             src={d.src}
@@ -50,7 +50,7 @@ function DealCard({ d, index }: { d: Product; index: number }) {
           />
         </div>
         <h3 className="mt-4 text-lg font-bold transition-colors group-hover:text-candy">{d.name}</h3>
-      </Link>
+      </TransitionLink>
       <p className="mt-1">
         <span className="text-xl font-bold text-candy">{d.price}</span>{" "}
         <span className="text-sm text-ink/50 line-through">{d.old}</span>

@@ -1,10 +1,11 @@
 const LINKS = [
   {
     name: "TikTok",
-    href: "https://www.tiktok.com/@meowpetshop",
+    href: "https://www.tiktok.com/@meowpetshop193",
     bg: "bg-ink",
     path: "M19.6 6.8a4.8 4.8 0 0 1-3.8-4.3h-3.3v13.3a2.7 2.7 0 1 1-2.7-2.7c.3 0 .5 0 .8.1V9.8a6 6 0 1 0 5.2 5.9V9.4a8 8 0 0 0 4.700 1.500V7.600c-.3 0-.6-.1-.9-.8z",
   },
+  /* Temporarily hidden — restore when Instagram/Facebook are ready
   {
     name: "Instagram",
     href: "https://www.instagram.com/meowpetshop",
@@ -17,6 +18,7 @@ const LINKS = [
     bg: "bg-[#1877f2]",
     path: "M13.500 22v-8.200h2.800l.4-3.300h-3.200V8.400c0-.9.300-1.600 1.600-1.600h1.700V3.900c-.3 0-1.300-.1-2.500-.1-2.500 0-4.200 1.500-4.200 4.300v2.400H7.300v3.300h2.800V22h3.400z",
   },
+  */
 ];
 
 export default function SocialLinks() {

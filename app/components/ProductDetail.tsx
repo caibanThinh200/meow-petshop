@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
-import Link from "next/link";
+import TransitionLink from "./TransitionLink";
 import {
   Check,
   ChevronRight,
@@ -15,8 +15,7 @@ import {
   Star,
   Truck,
 } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
-import { setPageReady } from "./LoadingScreen";
+import { useRef, useState } from "react";
 import {
   type Product,
   type Size,
@@ -35,10 +34,6 @@ export default function ProductDetail({ product }: { product: Product }) {
   const tabsRef = useRef<HTMLDivElement>(null);
   const detailTabRef = useRef<HTMLButtonElement>(null);
   const sizeTabRef = useRef<HTMLButtonElement>(null);
-
-  useEffect(() => {
-    setPageReady(true);
-  }, []);
 
   const images = product.images.length > 0 ? product.images : [product.src];
   const activeImage = images[selectedImageIndex] || product.src;
@@ -72,17 +67,17 @@ export default function ProductDetail({ product }: { product: Product }) {
       <nav aria-label="Breadcrumb" className="mb-6">
         <ol className="flex flex-wrap items-center gap-1.5 text-sm text-ink/60">
           <li>
-            <Link href="/" className="transition hover:text-candy">
+            <TransitionLink href="/" className="transition hover:text-candy">
               Trang chủ
-            </Link>
+            </TransitionLink>
           </li>
           <li aria-hidden="true">
             <ChevronRight size={14} />
           </li>
           <li>
-            <Link href="/#deals" className="transition hover:text-candy">
+            <TransitionLink href="/#deals" className="transition hover:text-candy">
               Flash Deals
-            </Link>
+            </TransitionLink>
           </li>
           <li aria-hidden="true">
             <ChevronRight size={14} />
